@@ -15,8 +15,10 @@
   );
 }
 
-.bg-body1{
-    background-color: whitesmoke;
+.finish-status {
+    width: 200px;
+    background-color: rgb(150, 228, 150);
+    color: green;
 }
 
 .text-gray{
@@ -77,4 +79,29 @@
     border: none;
     border-radius: 15px;
     width: 150px;
+}
+
+.btn-fund {
+    border: none;
+    border-radius: 15px;
+    width: 200px;
+    height: 50px;
+}
+
+/* profile Page */
+
+.img-profile {
+    object-fit: cover;
+    width: 200px;
+    height: 250px;
+}
+
+.textarea1 {
+    height: 250px;
+    resize: none;
+}
+
+.input-form{
+    height: 55px;
+    background-color: rgb(223, 220, 220);
 }

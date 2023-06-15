@@ -7,8 +7,7 @@ export default function CardDonation() {
         <div className="bg-body1 mb-0">
             <p className="fs-1 fw-bold text-red text-center" >Donation Now</p>
 
-            <div className=" row row-cols-1 row-cols-lg-3 row-cols-md-2 m-auto" style={{ width: "90%" }}>
-            {/* <div className=" d-flex justify-content-evenly flex-wrap m-auto mb-5" style={{ width: "90%" }}> */}
+            <div className=" row row-cols-1 row-cols-lg-3 row-cols-md-2 m-auto container">
 
                 <div className="col mt-5 mb-3">
                     <Card style={{ width: '25rem' }} className='position-relative m-auto' >
