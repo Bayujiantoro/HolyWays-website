@@ -37,7 +37,7 @@ export default function Navbar() {
                     </Dropdown.Menu>
                 </Dropdown> */}
 
-                <ModalRegister onHide={handleCloseRegister} show={showRegister} />
+                <ModalRegister onHide={handleCloseRegister} show={showRegister} showLogin={handleShowLogin} />
                 <ModalLogin onHide={handleCloseLogin} show={showLogin} />
             </div>
         </div>

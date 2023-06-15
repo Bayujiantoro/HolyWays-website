@@ -4,8 +4,12 @@ import Profile from "./component/profile/profile";
 import RaiseFund from "./component/raise-fund/raiseFund";
 import FormFund from "./component/create-fund/createFund";
 import DetailDonate from "./component/detail-donate/detailDonate";
+import { setAuthToken } from "./config/api";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 function App() {
   return (
     <Router>
