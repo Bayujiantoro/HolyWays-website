@@ -6,7 +6,7 @@ import FormFund from "./component/create-fund/createFund";
 import DetailDonate from "./component/detail-donate/detailDonate";
 import { setAuthToken } from "./config/api";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-
+import PrivateLogin from "./privateLogin";
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -15,10 +15,12 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/raise-fund" element={<RaiseFund />} />
-        <Route exact path="/create-fund" element={<FormFund />} />
-        <Route exact path="/detail-donation" element={<DetailDonate />} />
+        <Route exact path="/" element={<PrivateLogin />}>
+          <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/raise-fund" element={<RaiseFund />} />
+          <Route exact path="/create-fund" element={<FormFund />} />
+          <Route exact path="/detail-donation/:id" element={<DetailDonate />} />
+        </Route>
       </Routes>
     </Router>
   );

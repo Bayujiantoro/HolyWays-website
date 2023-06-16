@@ -8,6 +8,8 @@ export default function CardDonation() {
         const response = await API.get('/fund');
         return response?.data.Data
     })
+    console.log(fund)
+
     return (
         <div className="bg-body1 mb-0">
             <p className="fs-1 fw-bold text-red text-center" >Donation Now</p>
@@ -37,7 +39,17 @@ export default function CardDonation() {
                         <p className="ms-3 text-gray">{item?.Description} </p>
                         <div className="d-flex justify-content-between mb-3">
                             <p className="ms-3 fw-bold">Rp {item?.GoalsMoney}</p>
-                            <button type="button" class=" bg-color btn-donasi text-white fw-bold me-3" >Donate</button>
+                            
+
+                            <button type="button" class=" bg-color btn-donasi text-white fw-bold me-3" onClick={()=>{
+                                 if (localStorage.getItem("user") == null ) {
+                                    alert("silahkan Login terlebih dahulu !!!")
+                                    window.scrollTo(0, 0);
+                                } else {
+                                    window.location.href = `/detail-donation/${item?.ID}`
+                                }
+                            }}>Donate</button>
+                            
 
                         </div>
 
