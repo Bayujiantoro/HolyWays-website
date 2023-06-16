@@ -63,6 +63,7 @@ export default function Navbar() {
                     )}
 
                 <ModalRegister onHide={handleCloseRegister} show={showRegister} showLogin={handleShowLogin} />
+                
                 <ModalLogin onHide={handleCloseLogin} show={showLogin} />
             </div>
         </div>

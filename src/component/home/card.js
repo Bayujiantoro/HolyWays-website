@@ -34,7 +34,7 @@ export default function CardDonation() {
 
                     <div className="col mt-5 mb-3" key={index}>
                     <Card style={{ width: '25rem' }} className='position-relative m-auto' >
-                        <Card.Img variant="top" src={kids} />
+                        <Card.Img variant="top" src={item?.Image} style={{height:"300px", objectFit:"cover"}} />
                         <p className="ms-3 mt-3 me-3 fs-5 fw-bold">{item?.Title}</p>
                         <p className="ms-3 text-gray">{item?.Description} </p>
                         <div className="d-flex justify-content-between mb-3">

@@ -7,6 +7,13 @@ import { useQuery } from "react-query";
 
 
 export default function RaiseFund() {
+
+
+    const { data: checkAuth } = useQuery('authChace', async () => {
+        const response = await API.get('/check-auth');
+        return response?.data.Data
+    })
+    console.log("check auth : ", checkAuth)
     const { data: fund } = useQuery('fundChace', async () => {
         const response = await API.get('/fund');
         return response?.data.Data
@@ -24,7 +31,7 @@ export default function RaiseFund() {
             </div>
             <div className="row row-cols-1 row-cols-lg-3 row-cols-md-2 m-auto container" >
 
-                <div className="col mb-3">
+                <div className="col mb-5">
                     <Card style={{ width: '25rem' }} className='position-relative m-auto' >
                         <Card.Img variant="top" src={kids} />
                         <p className="ms-3 mt-3 me-3 fs-5 fw-bold">The Strength of a poeple power of community</p>
@@ -39,11 +46,11 @@ export default function RaiseFund() {
                     </Card>
                 </div>
 
-                {fund?.map((item, index) => (
+                {checkAuth?.Funds?.map((item, index) => (
 
-                    <div className="col mb-3" key={index}>
+                    <div className="col mb-5" key={index}>
                         <Card style={{ width: '25rem' }} className='position-relative m-auto' >
-                            <Card.Img variant="top" src={kids} />
+                            <Card.Img variant="top" src={item?.Image} style={{height:"300px", objectFit:"cover"}}/>
                             <p className="ms-3 mt-3 me-3 fs-5 fw-bold">{item?.Title}</p>
                             <p className="ms-3 text-gray">{item?.Description} </p>
                             <div className="d-flex justify-content-between mb-3">
