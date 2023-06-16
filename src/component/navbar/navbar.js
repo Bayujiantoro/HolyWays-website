@@ -37,7 +37,9 @@ export default function Navbar() {
         <div className="bg-color">
 
             <div class="container-fluid d-flex justify-content-between py-3 ">
+                <a href="/">
                 <Image className="ms-sm-5" src={Logo} style={{ objectFit: "contain" }} />
+                </a>
             {auth == null ? (
 
                 <div className="">
@@ -53,8 +55,8 @@ export default function Navbar() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Raise fund</Dropdown.Item>
+                        <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                        <Dropdown.Item href="/raise-fund">Raise fund</Dropdown.Item>
                         <Dropdown.Item onClick={logOut}>Log Out</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
