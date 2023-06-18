@@ -39,6 +39,7 @@ export default function ModalLogin({ show, onHide }) {
                 email: "",
                 password: "",
             })
+            window.location.reload()
 
             onHide()
         } catch (error) {

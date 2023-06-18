@@ -1,15 +1,30 @@
 import Navbar from "../navbar/navbar"
 import { Image } from "react-bootstrap"
 import nancy from "../images/nancy.jpg"
-
+import { useState } from "react";
 import { API } from "../../config/api";
 import { useQuery } from "react-query";
+import ModalUpdate from "./updateProfile";
 
 export default function Profile() {
     const { data: user } = useQuery('authChace', async () => {
         const response = await API.get('/check-auth');
         return response?.data.Data
     })
+
+    const profile = () => {
+        if (user?.ProfilePicture == "") {
+            return nancy
+        } else {
+            return user?.ProfilePicture
+        }
+
+    }
+
+
+    const [updateForm, setUpdateForm] = useState(false);
+    const closeModalUpdate = () => setUpdateForm(false)
+    const showModalUpdate = () => setUpdateForm(true)
 
     console.log(user)
     return (
@@ -20,7 +35,12 @@ export default function Profile() {
                 <div>
                     <p className="fs-2 fw-bold ">My Profile</p>
                     <div className="d-flex">
-                        <Image className="img-profile" src={nancy} />
+
+                        <div>
+                        <Image className="img-profile d-block" src={profile()} style={{width:"220px", objectFit:"cover"}} />
+                        <button type="button" className="btn fw-semibold btn-warning fs-5 mt-3" style={{ borderRadius: "7px", width: "220px", height: "43px", color: "white" }} onClick={() => showModalUpdate()}> Update </button>
+
+                        </div>
                         <div className="ms-5">
                             <p className="fs-5 text-red fw-bold mb-0 mt-4">Full Name</p>
                             <p className="fs-6 fw-semibold mt-0 mb-3">{user?.Name}</p>
@@ -48,7 +68,7 @@ export default function Profile() {
                             <p className="fw-bold fs-5 mb-2">{item?.Fund.Title}</p>
                             <p className="fw-bold">Saturday, <span style={{ color: "gray" }}>25 Agustus 2023</span></p>
                             <div className="d-flex justify-content-between ">
-                                <p className="text-red fw-bold">Total : Rp {item?.Money}</p>
+                                <p className="text-red fw-bold">Total : Rp {item?.Money.toLocaleString()}</p>
                                 <p className="finish-status fw-bold text-center rounded ">Finished</p>
                             </div>
 
@@ -56,6 +76,7 @@ export default function Profile() {
                     ))}
                 </div>
             </div>
+            <ModalUpdate show={updateForm} onHide={closeModalUpdate} id={user?.ID}/>
 
         </div>
     )

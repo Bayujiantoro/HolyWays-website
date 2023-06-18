@@ -5,6 +5,15 @@ import CardDonation from "./card";
 
 
 export default function Content() {
+
+    const handleBtn = ()=>{
+        if ( localStorage.getItem("user") == null) {
+            alert("silahkan Login dahulu !!!")
+            window.scrollTo(0, 0);
+        } else {
+            window.location.reload()
+        }
+    }
     return (
         <div>
 
@@ -12,7 +21,8 @@ export default function Content() {
             <div className="container-title">
                 <p className="fs-1  fw-semibold text-white pt-3">You Don't Need To Muslim To Stand Up For Palestine You Just Need To Be Human.</p>
                 <p className="text-white fs-5 mt-3">You need to enable JavaScript to run this app. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam temporibus ab sapiente totam est! Modi dignissimos fuga, obcaecati quibusdam rerum, reprehenderit explicabo, amet aliquam quae libero cupiditate incidunt odio ullam.</p>
-                <button type="button" className="btn fw-semibold fs-5 btn-light text-red mt-3" style={{ borderRadius: "7px", width: "200px", height: "45px" }}> Donate </button>
+                <button type="button" className="btn fw-semibold fs-5 btn-light text-red mt-3" style={{ borderRadius: "7px", width: "200px", height: "45px" }} onClick={handleBtn}> Donate </button>
+               
             </div>
             <Image src={Palestine} className="foto position-absolute-1"/>
             <Image src={palestine2} className="foto position-absolute-3"/>

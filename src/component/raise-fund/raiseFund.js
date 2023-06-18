@@ -54,7 +54,7 @@ export default function RaiseFund() {
                             <p className="ms-3 mt-3 me-3 fs-5 fw-bold">{item?.Title}</p>
                             <p className="ms-3 text-gray">{item?.Description} </p>
                             <div className="d-flex justify-content-between mb-3">
-                                <p className="ms-3 fw-bold">Rp {item?.GoalsMoney}</p>
+                                <p className="ms-3 fw-bold">Rp {item?.GoalsMoney.toLocaleString()}</p>
 
 
                                 <button type="button" class=" bg-color btn-donasi text-white fw-bold me-3" onClick={() => {

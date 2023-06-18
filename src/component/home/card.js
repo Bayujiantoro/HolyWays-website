@@ -16,8 +16,8 @@ export default function CardDonation() {
 
             <div className=" row row-cols-1 row-cols-lg-3 row-cols-md-2 m-auto container">
 
-                <div className="col mt-5 mb-3">
-                    <Card style={{ width: '25rem' }} className='position-relative m-auto' >
+                <div className="col mt-5 mb-5">
+                    <Card style={{ width: '25rem'}} className='position-relative m-auto' >
                         <Card.Img variant="top" src={kids} />
                         <p className="ms-3 mt-3 me-3 fs-5 fw-bold">The Strength of a poeple power of community</p>
                         <p className="ms-3 text-gray">Numquam temporibus ab sapiente totam est! Modi dignissimos fuga, </p>
@@ -32,13 +32,13 @@ export default function CardDonation() {
                 </div>
                 {fund?.map((item, index)=>(
 
-                    <div className="col mt-5 mb-3" key={index}>
-                    <Card style={{ width: '25rem' }} className='position-relative m-auto' >
+                    <div className="col mt-5 mb-5" key={index}>
+                    <Card style={{ width: '25rem', }} className='position-relative m-auto' >
                         <Card.Img variant="top" src={item?.Image} style={{height:"300px", objectFit:"cover"}} />
                         <p className="ms-3 mt-3 me-3 fs-5 fw-bold">{item?.Title}</p>
                         <p className="ms-3 text-gray">{item?.Description} </p>
                         <div className="d-flex justify-content-between mb-3">
-                            <p className="ms-3 fw-bold">Rp {item?.GoalsMoney}</p>
+                            <p className="ms-3 fw-bold">Rp {item?.GoalsMoney.toLocaleString()}</p>
                             
 
                             <button type="button" class=" bg-color btn-donasi text-white fw-bold me-3" onClick={()=>{

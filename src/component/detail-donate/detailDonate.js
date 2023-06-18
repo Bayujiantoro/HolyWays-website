@@ -5,6 +5,7 @@ import ListDonation from "./list-donation";
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { API } from "../../config/api";
+import { Form } from "react-bootstrap";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -15,17 +16,25 @@ import Modal from 'react-bootstrap/Modal';
 
 export default function DetailDonate() {
     const [deleteModal, setDeleteModal] = useState(false);
+    const [ModalDonation, setModalDonation] = useState(false)
+
+    const donationClose = () => setModalDonation(false)
+    const donationShow = () => setModalDonation(true)
 
     const handleClose = () => setDeleteModal(false);
     const handleShow = () => setDeleteModal(true);
 
     let [donation, setDonation] = useState(0)
     const { id } = useParams()
-    const { data: fund } = useQuery('fundChace', async () => {
+    const { data: fund , refetch} = useQuery('fundChace', async () => {
         const response = await API.get(`/fund/${id}`);
         console.log(response?.data.Data)
         return response?.data.Data
     })
+    const Day = new Date(fund?.GoalsDay)
+    const Now = Date.now()
+    console.log("day goals : ",Day)
+    console.log("day Now : ",Now)
     let arrDonation = fund?.Donation
     let donatur = arrDonation?.length
 
@@ -40,9 +49,21 @@ export default function DetailDonate() {
     console.log("user : ", localStorage.getItem("user"))
 
     // console.log("persentase : ", persentase)
+    const [data, setData] = useState({
+        money: ""
+    })
 
-    const createDonation = useMutation(async () => {
+
+    function handleOnChange(e) {
+        setData({
+            ...data,
+            [e.target.name]: e.target.value
+        })
+        console.log(e.target)
+    }
+    const createDonation = useMutation(async (e) => {
         try {
+            e.preventDefault()
             const config = {
                 Headers: {
                     'Content-Type': 'application/json'
@@ -50,11 +71,13 @@ export default function DetailDonate() {
             }
             let donation = {
                 Status: "waitting Payment",
-                Money: 5000000,
+                Money: parseInt(data.money),
                 FundID: parseInt(id)
             }
             const response = await API.post("/donation", donation, config);
             console.log("xxxxx : ", response)
+            donationClose()
+            refetch()
 
             const token = response.data.Data.token;
             window.snap.pay(token, {
@@ -109,6 +132,33 @@ export default function DetailDonate() {
         }
     })
 
+    const getDuration = (timeStart,timeEnd) => {
+        const miliSecond = 1000
+        const distance = new Date(timeEnd) - new Date(timeStart);
+        
+        // const monthDistance = Math.floor(distance / (30 * 24 * 60 * 60 * miliSecond))
+        // if(monthDistance > 0 ) {
+        //   return  monthDistance  + " More Month"
+        // } else {
+        // }
+        const dayDistance = Math.floor(distance / (24 * 60 * 60 * miliSecond))
+        if(dayDistance != 0) {
+          return  dayDistance
+        } else {
+          const hourDistance = Math.floor(distance / (60 * 60 * miliSecond)) 
+          if(hourDistance >= 1) {
+            return  hourDistance  + " More Hours"
+          } else {
+            const minuteDistance = Math.floor(distance / ( 60 * miliSecond))
+            if(minuteDistance != 0) {
+              return "Durasi : " + minuteDistance  + " More Minutes"
+            }
+          }
+        }
+    
+       
+      };
+    console.log(getDuration(Now, Day))
     return (
         <div>
             <Navbar />
@@ -128,17 +178,21 @@ export default function DetailDonate() {
                     <ProgressBar variant="danger" className="mb-3" now={persentase} />
                     <div className="d-flex justify-content-between mb-3">
                         <p className="fw-bold fs-5">{donatur} <span style={{ color: "gray", fontSize: "17px" }}>Donation</span></p>
-                        <p className="fw-bold fs-5">150 <span style={{ color: "gray", fontSize: "17px" }}>More Day</span></p>
+                        {/* <p className="fw-bold fs-5">{getDuration(Now, Day)}</p> */}
+                        <p className="fw-bold fs-5"> {getDuration(Now, Day)} <span style={{ color: "gray", fontSize: "17px" }}>More Day</span></p>
 
                     </div>
                     <p className="ms-3 text-gray fw-semibold">{fund?.description} </p>
                     <div className=" mb-3">
-                        <button type="button" class=" bg-color text-white fw-bold mt-5" style={{ width: "100%", border: "none", borderRadius: "7px", height: "40px", }} onClick={createDonation.mutate} >Donate</button>
+                        <button type="button" class=" bg-color text-white fw-bold mt-5" style={{ width: "100%", border: "none", borderRadius: "7px", height: "40px", }} onClick={donationShow} >Donate</button>
+
+                        {/* <button type="button" class=" bg-color text-white fw-bold mt-5" style={{ width: "100%", border: "none", borderRadius: "7px", height: "40px", }} onClick={createDonation.mutate} >Donate</button> */}
 
                         {localStorage.getItem("user") == fund?.User.Name ? (
 
                             <div className="d-flex justify-content-between">
-                                <button type="button" class=" bg-warning text-white fw-bold mt-2" style={{ width: "45%", border: "none", borderRadius: "7px", height: "40px", }}>Update</button>
+
+                                <button type="button" class=" bg-warning text-white fw-bold mt-2" style={{ width: "45%", border: "none", borderRadius: "7px", height: "40px", }} onClick={()=>{window.location.href = `/edit-fund/${id}`}}>Update</button>
                                 <button type="button" class=" bg-secondary text-white fw-bold mt-2" style={{ width: "45%", border: "none", borderRadius: "7px", height: "40px", }} onClick={handleShow}>Delete</button>
                             </div>
                         ) : (
@@ -161,6 +215,23 @@ export default function DetailDonate() {
                     <button type="submit" className="btn fw-semibold fs-5" style={{ borderRadius: "7px", width: "45%", height: "50px", color: "white", backgroundColor: "rgb(202, 20, 20)" }} onClick={handleClose}> Cancel </button>
                     <button type="submit" className="btn fw-semibold fs-5 bg-secondary" style={{ borderRadius: "7px", width: "45%", height: "50px", color: "white", }} onClick={()=>{deleteButton.mutate(id)}}> Delete </button>
                     </div>
+
+                </Modal.Body>
+
+            </Modal>
+            <Modal show={ModalDonation} onHide={donationClose} centered>
+
+                <Modal.Body className='rounded' style={{ backgroundColor: "whitesmoke" }}>
+
+                <Form className="form-auth mt-5" onSubmit={(e)=> createDonation.mutate(e)}>
+                    <p className='fw-bold fs-1 mb-4'> </p>
+
+                    <Form.Control type="number" className="mb-4 fw-semibold input-form" name='money' placeholder="Nominal Donation"  onChange={handleOnChange}/>
+
+                    <div className="d-flex justify-content-center">
+                    <button type="submit" className="btn fw-semibold fs-5 mt-4 mb-2" style={{ borderRadius: "7px", width: "60%" , height: "45px", color: "white", backgroundColor: "rgb(202, 20, 20)"}} > Donation </button>
+                    </div>
+                </Form>
 
                 </Modal.Body>
 

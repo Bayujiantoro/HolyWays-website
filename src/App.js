@@ -4,6 +4,7 @@ import Profile from "./component/profile/profile";
 import RaiseFund from "./component/raise-fund/raiseFund";
 import FormFund from "./component/create-fund/createFund";
 import DetailDonate from "./component/detail-donate/detailDonate";
+import EditFund from "./component/edit-fund/editFund";
 import { setAuthToken } from "./config/api";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import PrivateLogin from "./privateLogin";
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/raise-fund" element={<RaiseFund />} />
           <Route exact path="/create-fund" element={<FormFund />} />
           <Route exact path="/detail-donation/:id" element={<DetailDonate />} />
+          <Route exact path="/edit-fund/:id" element={<EditFund />} />
         </Route>
       </Routes>
     </Router>
