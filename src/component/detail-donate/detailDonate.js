@@ -62,47 +62,62 @@ export default function DetailDonate() {
         console.log(e.target)
     }
     const createDonation = useMutation(async (e) => {
-        try {
-            e.preventDefault()
-            const config = {
-                Headers: {
-                    'Content-Type': 'application/json'
-                },
-            }
-            let donation = {
-                Status: "waitting Payment",
-                Money: parseInt(data.money),
-                FundID: parseInt(id)
-            }
-            const response = await API.post("/donation", donation, config);
-            console.log("xxxxx : ", response)
-            donationClose()
-            refetch()
+        if(collectDonation >= fund?.GoalsMoney) {
+            return alert("Donasi telah tercapai !!")
+        } else if (parseInt(data.money) >= fund?.GoalsMoney ) {
+            console.log("data.money : ", data.money)
+            console.log("colect : ", collectDonation)
+            return alert("Nominal yang anda masukan terlalu banyak !!")
+        } else if ((parseInt(data.money) + collectDonation) >= fund?.GoalsMoney) {
+            console.log("jumlah : ", data.money + collectDonation)
+            console.log("data.money : ", data.money)
+            console.log("colect : ", collectDonation)
+            return alert("Nominal yang anda masukan terlalu banyakkkkk !!")
+        } else {
 
-            const token = response.data.Data.token;
-            window.snap.pay(token, {
-                onSuccess: function (result) {
-                    /* You may add your own implementation here */
-                    console.log(result);
-                },
-                onPending: function (result) {
-                    /* You may add your own implementation here */
-                    console.log(result);
-                },
-                onError: function (result) {
-                    /* You may add your own implementation here */
-                    console.log(result);
-                },
-                onClose: function () {
-                    /* You may add your own implementation here */
-                    alert("you closed the popup without finishing the payment");
-                },
-            });
-            // payment midtrans
-
-        } catch (error) {
-            console.log("failed xxx : ", error)
+            try {
+                e.preventDefault()
+                const config = {
+                    Headers: {
+                        'Content-Type': 'application/json'
+                    },
+                }
+                let donation = {
+                    Status: "waitting Payment",
+                    Money: parseInt(data.money),
+                    FundID: parseInt(id)
+                }
+                const response = await API.post("/donation", donation, config);
+                console.log("xxxxx : ", response)
+                donationClose()
+                refetch()
+    
+                const token = response.data.Data.token;
+                window.snap.pay(token, {
+                    onSuccess: function (result) {
+                        /* You may add your own implementation here */
+                        console.log(result);
+                    },
+                    onPending: function (result) {
+                        /* You may add your own implementation here */
+                        console.log(result);
+                    },
+                    onError: function (result) {
+                        /* You may add your own implementation here */
+                        console.log(result);
+                    },
+                    onClose: function () {
+                        /* You may add your own implementation here */
+                        alert("you closed the popup without finishing the payment");
+                    },
+                });
+                // payment midtrans
+    
+            } catch (error) {
+                console.log("failed xxx : ", error)
+            }
         }
+
     })
 
     useEffect(() => {
