@@ -22,7 +22,7 @@ export default function CardDonation() {
     console.log(fund)
 
     return (
-        <div className="bg-body1 mb-0">
+        <div className="bg-body1 mb-0 pt-3">
             <p className="fs-1 fw-bold text-red text-center" >Donation Now</p>
 
             <div className=" row row-cols-1 row-cols-lg-3 row-cols-md-2 m-auto container">
