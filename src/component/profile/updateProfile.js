@@ -24,10 +24,10 @@ export default function ModalUpdate({ show, onHide, id }) {
         });
 
         if (e.target.type === "file") {
-            console.log("isandsaxsa  : ",e.target.files[0])
             let url = URL.createObjectURL(e.target.files[0]);
             setPreview(url);
             
+            console.log("isandsaxsa  : ",e.target.files[0])
         }
     }
     console.log(data)

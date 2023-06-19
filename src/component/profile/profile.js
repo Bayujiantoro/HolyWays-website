@@ -69,7 +69,7 @@ export default function Profile() {
                             <p className="fw-bold">Saturday, <span style={{ color: "gray" }}>25 Agustus 2023</span></p>
                             <div className="d-flex justify-content-between ">
                                 <p className="text-red fw-bold">Total : Rp {item?.Money.toLocaleString()}</p>
-                                <p className="finish-status fw-bold text-center rounded ">Finished</p>
+                                <p className="finish-status fw-bold text-center rounded ">{item?.Status}</p>
                             </div>
 
                         </div>
