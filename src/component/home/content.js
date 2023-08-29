@@ -6,8 +6,8 @@ import CardDonation from "./card";
 
 export default function Content() {
 
-    const handleBtn = ()=>{
-        if ( localStorage.getItem("user") == null) {
+    const handleBtn = () => {
+        if (localStorage.getItem("user") == null) {
             alert("silahkan Login dahulu !!!")
             window.scrollTo(0, 0);
         } else {
@@ -17,8 +17,9 @@ export default function Content() {
     return (
         <div>
 
-        <div className="bg-home relative-container mb-5">
-            <div className="container-title">
+           <div className="dekstop">
+           <div className="bg-home relative-container mb-5">
+            <div className="container-title ">
                 <p className="fs-1  fw-semibold text-white pt-3">You Don't Need To Muslim To Stand Up For Palestine You Just Need To Be Human.</p>
                 <p className="text-white fs-5 mt-3">You need to enable JavaScript to run this app. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam temporibus ab sapiente totam est! Modi dignissimos fuga, obcaecati quibusdam rerum, reprehenderit explicabo, amet aliquam quae libero cupiditate incidunt odio ullam.</p>
                 <button type="button" className="btn fw-semibold fs-5 btn-light text-red mt-3" style={{ borderRadius: "7px", width: "200px", height: "45px" }} onClick={handleBtn}> Donate </button>
@@ -37,7 +38,40 @@ export default function Content() {
             </div>
             
         </div>
-        <CardDonation/>
+           </div>
+
+            <div className="mobile">
+            <div className="bg-home-mobile  mb-5 pb-5">
+                <div className="container-title text-center">
+                    <p className="fs-1  fw-semibold text-white pt-3">You Don't Need To Muslim To Stand Up For Palestine You Just Need To Be Human.</p>
+                    <p className="text-white fs-5 mt-3">You need to enable JavaScript to run this app. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam temporibus ab sapiente totam est! Modi dignissimos fuga, obcaecati quibusdam rerum, reprehenderit explicabo, amet aliquam quae libero cupiditate incidunt odio ullam.</p>
+                    <button type="button" className="btn fw-semibold fs-5 btn-light text-red mt-3" style={{ borderRadius: "7px", width: "200px", height: "45px" }} onClick={handleBtn}> Donate </button>
+
+                </div>
+            </div>
+
+            <div className="">
+                <div className="d-flex justify-content-center">
+                    <Image src={Palestine} className="foto" />
+                </div>
+
+                <div className="m-auto text-center" style={{width:"90%"}}>
+                    <p className="fs-1  fw-bold pt-3">Your Donation is Very Heplful for Poeple effected by War in Palestine.</p>
+                    <div className="d-md-flex" >
+                        <p className="fs-5 me-3">You need to enable JavaScript to run this app. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Numquam temporibus ab sapiente totam est! Modi dignissimos fuga, obcaecati quibusdam rerum, reprehenderit explicabo, amet aliquam quae libero cupiditate incidunt odio ullam</p>
+                        <p className="fs-5">sapiente totam est! Modi dignissimos fuga, obcaecati quibusdam rerum, reprehenderit explicabo, amet aliquam quae libero cupiditate incidunt odio ullam</p>
+                    </div>
+                    <div className="d-flex justify-content-center">
+                    <Image src={palestine2} className="foto" />
+                    </div>
+
+                </div>
+            </div>
+            </div>
+            <div style={{ paddingTop: "100px" }} >
+
+                <CardDonation />
+            </div>
         </div>
     )
 }

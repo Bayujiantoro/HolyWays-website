@@ -19,6 +19,7 @@
     width: 200px;
     background-color: rgb(150, 228, 150);
     color: green;
+    height: 30px;
 }
 
 .text-gray{
@@ -64,14 +65,14 @@
 }
 .position-absolute-2{
     position: absolute;
-    top: 700px;
+    top: 550px;
     right: 100px;
     width: 55%;
 }
 
 .position-absolute-3 {
     position: absolute;
-    top: 400px;
+    top: 500px;
     left: 0px;
 }
 
@@ -104,4 +105,52 @@
 .input-form{
     height: 55px;
     background-color: rgb(223, 220, 220);
+}
+.mobile {
+    display: none;
+}
+.dekstop {
+    display: block;
+}
+
+.image-detail {
+    width: 500px;
+    object-fit: contain;
+}
+.header-progres-bar {
+    width: 650px;
+}
+
+@media screen and (max-width: 600px) {
+    .dekstop {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+    .bg-home-mobile {
+        width: 100%;
+      background-color: rgb(202, 20, 20)
+      
+    }
+    .container-title {
+        width: 90%;
+        margin-left: 0;
+        margin: auto;
+    }
+
+    .position-absolute-1{
+        position: static;
+        margin-top: 30px;
+        right: 0;
+    }
+    .foto {
+        width: 90%;
+    }
+    .image-detail {
+        width: 100%;
+    }
+    .header-progres-bar {
+        width: 100%;
+    }
 }

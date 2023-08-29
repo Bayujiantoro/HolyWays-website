@@ -1,5 +1,4 @@
 import { Image } from "react-bootstrap"
-import palestine from "../images/palestine.png"
 import Navbar from "../navbar/navbar"
 import ListDonation from "./list-donation";
 import ProgressBar from 'react-bootstrap/ProgressBar';
@@ -26,15 +25,14 @@ export default function DetailDonate() {
 
     let [donation, setDonation] = useState(0)
     const { id } = useParams()
-    const { data: fund , refetch} = useQuery('fundChace', async () => {
+    const { data: fund, refetch } = useQuery('fundChace', async () => {
         const response = await API.get(`/fund/${id}`);
-        console.log(response?.data.Data)
+        console.log(' response : ', response?.data.Data)
         return response?.data.Data
     })
     const Day = new Date(fund?.GoalsDay)
     const Now = Date.now()
-    console.log("day goals : ",Day)
-    console.log("day Now : ",Now)
+
     let arrDonation = fund?.Donation
     let donatur = arrDonation?.length
 
@@ -62,9 +60,9 @@ export default function DetailDonate() {
         console.log(e.target)
     }
     const createDonation = useMutation(async (e) => {
-        if(collectDonation >= fund?.GoalsMoney) {
+        if (collectDonation >= fund?.GoalsMoney) {
             return alert("Donasi telah tercapai !!")
-        } else if (parseInt(data.money) >= fund?.GoalsMoney ) {
+        } else if (parseInt(data.money) >= fund?.GoalsMoney) {
             console.log("data.money : ", data.money)
             console.log("colect : ", collectDonation)
             return alert("Nominal yang anda masukan terlalu banyak !!")
@@ -91,7 +89,7 @@ export default function DetailDonate() {
                 console.log("xxxxx : ", response)
                 donationClose()
                 refetch()
-    
+
                 const token = response.data.Data.token;
                 window.snap.pay(token, {
                     onSuccess: function (result) {
@@ -112,7 +110,7 @@ export default function DetailDonate() {
                     },
                 });
                 // payment midtrans
-    
+
             } catch (error) {
                 console.log("failed xxx : ", error)
             }
@@ -147,59 +145,75 @@ export default function DetailDonate() {
         }
     })
 
-    const getDuration = (timeStart,timeEnd) => {
+    const getDuration = (timeStart, timeEnd) => {
         const miliSecond = 1000
         const distance = new Date(timeEnd) - new Date(timeStart);
-        
+
         // const monthDistance = Math.floor(distance / (30 * 24 * 60 * 60 * miliSecond))
         // if(monthDistance > 0 ) {
         //   return  monthDistance  + " More Month"
         // } else {
         // }
         const dayDistance = Math.floor(distance / (24 * 60 * 60 * miliSecond))
-        if(dayDistance != 0) {
-          return  dayDistance
+        if (dayDistance != 0) {
+            return dayDistance
         } else {
-          const hourDistance = Math.floor(distance / (60 * 60 * miliSecond)) 
-          if(hourDistance >= 1) {
-            return  hourDistance  + " More Hours"
-          } else {
-            const minuteDistance = Math.floor(distance / ( 60 * miliSecond))
-            if(minuteDistance != 0) {
-              return "Durasi : " + minuteDistance  + " More Minutes"
+            const hourDistance = Math.floor(distance / (60 * 60 * miliSecond))
+            if (hourDistance >= 1) {
+                return hourDistance + " More Hours"
+            } else {
+                const minuteDistance = Math.floor(distance / (60 * miliSecond))
+                if (minuteDistance != 0) {
+                    return "Durasi : " + minuteDistance + " More Minutes"
+                }
             }
-          }
         }
-    
-       
-      };
+
+
+    };
     console.log(getDuration(Now, Day))
     return (
         <div>
             <Navbar />
-            <div className="container d-md-flex justify-content-md-between">
-                <Image className="mt-md-5 border" src={palestine} style={{ width: "500px" }} />
-                <div className=" mt-md-5" style={{ width: "650px" }}>
+            <div className="container d-md-flex gap-5 justify-content-md-between">
+                <Image className="mt-5 image-detail" src={fund?.Image} />
+                <div className=" mt-md-5 header-progres-bar" >
 
                     <p className="ms-3 pt-3 me-3 fs-2 fw-bold">{fund?.Title}</p>
-                    <div className="d-flex">
-                        <div className=" d-flex justify-content-between mt-4 container-fluid">
+                    <div className="dekstop">
+                        <div className=" d-flex">
+                            <div className=" d-flex justify-content-between mt-4 container-fluid">
 
-                            <p className="fs-5 fw-bold text-red">Rp {collectDonation.toLocaleString()}   </p>
-                            <p style={{ fontSize: "18px", color: "gray", fontWeight: "bold" }}>  gathered form </p>
-                            <p style={{ color: "gray", }} className="fs-5 fw-bold">  Rp {fund?.GoalsMoney.toLocaleString()}</p>
+                                <p className="fs-5 fw-bold text-red">Rp {collectDonation.toLocaleString()}   </p>
+                                <p style={{ fontSize: "18px", color: "gray", fontWeight: "bold" }}>  gathered form </p>
+                                <p style={{ color: "gray", }} className="fs-5 fw-bold">  Rp {fund?.GoalsMoney.toLocaleString()}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mobile">
+                        <div className="d-flex">
+                            <div className=" d-flex justify-content-between mt-4 container-fluid">
+
+                                <p className="fs-5 fw-bold text-red">Rp {collectDonation.toLocaleString()}   </p>
+                                <p style={{ fontSize: "18px", color: "gray", fontWeight: "bold" }}>  - </p>
+                                <p style={{ color: "gray", }} className="fs-5 fw-bold">  Rp {fund?.GoalsMoney.toLocaleString()}</p>
+                            </div>
                         </div>
                     </div>
                     <ProgressBar variant="danger" className="mb-3" now={persentase} />
                     <div className="d-flex justify-content-between mb-3">
                         <p className="fw-bold fs-5">{donatur} <span style={{ color: "gray", fontSize: "17px" }}>Donation</span></p>
-                        {/* <p className="fw-bold fs-5">{getDuration(Now, Day)}</p> */}
-                        <p className="fw-bold fs-5"> {getDuration(Now, Day)} <span style={{ color: "gray", fontSize: "17px" }}>More Day</span></p>
+                        {getDuration(Now, Day) < 0 ? (
+                            <p className="fw-bold fs-5"> <span style={{ color: "gray", fontSize: "17px" }}>Expired</span></p>
+                        ) : (
+                            <p className="fw-bold fs-5"> {getDuration(Now, Day)} <span style={{ color: "gray", fontSize: "17px" }}>More Day</span></p>
+                        )}
 
                     </div>
                     <p className="ms-3 text-gray fw-semibold">{fund?.description} </p>
                     <div className=" mb-3">
                         <button type="button" class=" bg-color text-white fw-bold mt-5" style={{ width: "100%", border: "none", borderRadius: "7px", height: "40px", }} onClick={donationShow} >Donate</button>
+
 
                         {/* <button type="button" class=" bg-color text-white fw-bold mt-5" style={{ width: "100%", border: "none", borderRadius: "7px", height: "40px", }} onClick={createDonation.mutate} >Donate</button> */}
 
@@ -207,7 +221,7 @@ export default function DetailDonate() {
 
                             <div className="d-flex justify-content-between">
 
-                                <button type="button" class=" bg-warning text-white fw-bold mt-2" style={{ width: "45%", border: "none", borderRadius: "7px", height: "40px", }} onClick={()=>{window.location.href = `/edit-fund/${id}`}}>Update</button>
+                                <button type="button" class=" bg-warning text-white fw-bold mt-2" style={{ width: "45%", border: "none", borderRadius: "7px", height: "40px", }} onClick={() => { window.location.href = `/edit-fund/${id}` }}>Update</button>
                                 <button type="button" class=" bg-secondary text-white fw-bold mt-2" style={{ width: "45%", border: "none", borderRadius: "7px", height: "40px", }} onClick={handleShow}>Delete</button>
                             </div>
                         ) : (
@@ -227,8 +241,8 @@ export default function DetailDonate() {
 
                     <div className="d-flex justify-content-between">
 
-                    <button type="submit" className="btn fw-semibold fs-5" style={{ borderRadius: "7px", width: "45%", height: "50px", color: "white", backgroundColor: "rgb(202, 20, 20)" }} onClick={handleClose}> Cancel </button>
-                    <button type="submit" className="btn fw-semibold fs-5 bg-secondary" style={{ borderRadius: "7px", width: "45%", height: "50px", color: "white", }} onClick={()=>{deleteButton.mutate(id)}}> Delete </button>
+                        <button type="submit" className="btn fw-semibold fs-5" style={{ borderRadius: "7px", width: "45%", height: "50px", color: "white", backgroundColor: "rgb(202, 20, 20)" }} onClick={handleClose}> Cancel </button>
+                        <button type="submit" className="btn fw-semibold fs-5 bg-secondary" style={{ borderRadius: "7px", width: "45%", height: "50px", color: "white", }} onClick={() => { deleteButton.mutate(id) }}> Delete </button>
                     </div>
 
                 </Modal.Body>
@@ -238,15 +252,15 @@ export default function DetailDonate() {
 
                 <Modal.Body className='rounded' style={{ backgroundColor: "whitesmoke" }}>
 
-                <Form className="form-auth mt-5" onSubmit={(e)=> createDonation.mutate(e)}>
-                    <p className='fw-bold fs-1 mb-4'> </p>
+                    <Form className="form-auth mt-5" onSubmit={(e) => createDonation.mutate(e)}>
+                        <p className='fw-bold fs-1 mb-4'> </p>
 
-                    <Form.Control type="number" className="mb-4 fw-semibold input-form" name='money' placeholder="Nominal Donation"  onChange={handleOnChange}/>
+                        <Form.Control type="number" className="mb-4 fw-semibold input-form" name='money' placeholder="Nominal Donation" onChange={handleOnChange} />
 
-                    <div className="d-flex justify-content-center">
-                    <button type="submit" className="btn fw-semibold fs-5 mt-4 mb-2" style={{ borderRadius: "7px", width: "60%" , height: "45px", color: "white", backgroundColor: "rgb(202, 20, 20)"}} > Donation </button>
-                    </div>
-                </Form>
+                        <div className="d-flex justify-content-center">
+                            <button type="submit" className="btn fw-semibold fs-5 mt-4 mb-2" style={{ borderRadius: "7px", width: "60%", height: "45px", color: "white", backgroundColor: "rgb(202, 20, 20)" }} > Donation </button>
+                        </div>
+                    </Form>
 
                 </Modal.Body>
 

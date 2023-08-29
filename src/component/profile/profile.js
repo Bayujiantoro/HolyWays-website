@@ -30,18 +30,20 @@ export default function Profile() {
     return (
         <div className="">
             <Navbar />
-            <div className="container mt-5 d-flex justify-content-between">
+            <div className="container mt-5 d-md-flex justify-content-between">
 
-                <div>
-                    <p className="fs-2 fw-bold ">My Profile</p>
-                    <div className="d-flex">
+                <div className="">
+                    <p className="fs-2 fw-bold text-center text-md-start">My Profile</p>
+                    <div className="d-md-flex">
 
-                        <div>
+                        <div className="text-center text-md-start">
+                        <div className="d-flex justify-content-center justify-content-md-start">
                         <Image className="img-profile d-block" src={profile()} style={{width:"220px", objectFit:"cover"}} />
+                        </div>
                         <button type="button" className="btn fw-semibold btn-warning fs-5 mt-3" style={{ borderRadius: "7px", width: "220px", height: "43px", color: "white" }} onClick={() => showModalUpdate()}> Update </button>
 
                         </div>
-                        <div className="ms-5">
+                        <div className="ms-md-5 ms-2">
                             <p className="fs-5 text-red fw-bold mb-0 mt-4">Full Name</p>
                             <p className="fs-6 fw-semibold mt-0 mb-3">{user?.Name}</p>
                             <p className="fs-5 text-red fw-bold mb-0">Email</p>
